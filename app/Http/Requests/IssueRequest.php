@@ -2,17 +2,18 @@
 
 namespace App\Http\Requests;
 
-use Illuminate\Foundation\Http\FormRequest;
+use Orion\Http\Requests\Request;
 use Illuminate\Support\Facades\Auth;
 
-class UpdateIssueRequest extends FormRequest
+class IssueRequest extends Request
 {
     /**
      * Determine if the user is authorized to make this request.
      */
     public function authorize(): bool
     {
-        return Auth::check() && Auth::user()->is_admin;
+        return true;
+        // return Auth::check() && Auth::user()->is_admin;
     }
 
     /**
@@ -21,16 +22,16 @@ class UpdateIssueRequest extends FormRequest
      * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
      */
 
-    public function rules(): array
+    public function commonRules(): array
     {
         return [
-            'title' => 'required|string|max:255',
+            'title' => 'required|string',
             'description' => 'required|string',
             'volume' => 'required|string|max:255',
             'number' => 'required|string|max:255',
             'year' => 'required|string|max:4',
             'month' => 'required|string|max:2',
-            'cover' => 'required|string|max:255',
+            'cover' => 'required|string',
             'doi' => 'nullable|string|max:255',
         ];
     }

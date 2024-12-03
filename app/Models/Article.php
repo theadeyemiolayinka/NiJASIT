@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Article extends Model
 {
     use SoftDeletes;
-    
+
     protected $fillable = [
         'title',
         'abstract',
@@ -35,4 +35,12 @@ class Article extends Model
         'keywords' => 'array',
         'authors' => 'array',
     ];
+
+    public function issue() {
+        return $this->belongsTo(Issue::class);
+    }
+
+    public function user() {
+        return $this->belongsTo(User::class);
+    }
 }

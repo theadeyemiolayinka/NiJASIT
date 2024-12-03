@@ -3,24 +3,21 @@
 namespace App\Http\Controllers\Api;
 
 use App\Models\Issue;
-use App\Http\Requests\StoreIssueRequest;
-use App\Http\Requests\UpdateIssueRequest;
 use Illuminate\Support\Facades\Auth;
+use Orion\Concerns\DisableAuthorization;
 use Orion\Http\Controllers\Controller;
 
 class IssueController extends Controller
 {
+    use DisableAuthorization;
 
-    public function __construct()
+    protected function applyMiddleware()
     {
-        $this->middleware(['auth:api', 'admin'])->only(['store', 'update', 'destroy', 'restore', 'batchStore', 'batchUpdate', 'batchDestroy', 'batchRestore']);
+        $this->middleware('auth:api')->only(['store', 'update', 'destroy', 'restore', 'batchStore', 'batchUpdate', 'batchDestroy', 'batchRestore']);
+        $this->middleware('admin')->only(['store', 'update', 'destroy', 'restore', 'batchStore', 'batchUpdate', 'batchDestroy', 'batchRestore']);
     }
 
     protected $model = Issue::class;
-
-    protected $request = StoreIssueRequest::class;
-
-    protected $updateRequest = UpdateIssueRequest::class;
 
     protected $attributes = [
         'id',
@@ -74,11 +71,11 @@ class IssueController extends Controller
 
     protected $softDeletes = true;
 
-    // protected $scopes = [];
+    protected $scopes = [];
 
-    // protected $allowedFilters = [];
+    protected $allowedFilters = [];
 
-    // protected $allowedIncludes = [];
+    protected $allowedIncludes = [];
 
     protected $searchable = [
         'id',
@@ -95,15 +92,15 @@ class IssueController extends Controller
         'updated_at'
     ];
 
-    // protected $with = [];
+    protected $with = [];
 
-    // protected $withCount = [];
+    protected $withCount = [];
 
     protected $perPage = 20;
 
     protected $maxPerPage = 1000;
 
-    protected $resource = 'App\Http\Resources\IssueResource';
+    protected $resource = \App\Http\Resources\IssueResource::class;
 
     protected function beforeStore($request, $model)
     {

@@ -3,10 +3,14 @@
 namespace App\Http\Controllers\Api;
 
 use App\Models\Issue;
+use Orion\Concerns\DisableAuthorization;
 use Orion\Http\Controllers\RelationController;
 
 class IssueArticlesController extends RelationController
 {
+
+    use DisableAuthorization;
+
     /**
      * Fully-qualified model class name
      */

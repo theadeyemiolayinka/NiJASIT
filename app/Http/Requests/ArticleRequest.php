@@ -2,16 +2,18 @@
 
 namespace App\Http\Requests;
 
-use Illuminate\Foundation\Http\FormRequest;
+use Orion\Http\Requests\Request;
+use Illuminate\Support\Facades\Auth;
 
-class UpdateArticleRequest extends FormRequest
+class ArticleRequest extends Request
 {
     /**
      * Determine if the user is authorized to make this request.
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
+        // return Auth::check() && Auth::user()->is_admin;
     }
 
     /**
@@ -19,39 +21,18 @@ class UpdateArticleRequest extends FormRequest
      *
      * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
      */
-    public function rules(): array
+    public function commonRules(): array
     {
-        return [
 
-        ];
-    }
-}
-class StoreArticleRequest extends FormRequest
-{
-    /**
-     * Determine if the user is authorized to make this request.
-     */
-    public function authorize(): bool
-    {
-        return false;
-    }
-
-    /**
-     * Get the validation rules that apply to the request.
-     *
-     * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
-     */
-    public function rules(): array
-    {
         return [
-            'title' => 'required|string|max:255',
+            'title' => 'required|string',
             'abstract' => 'required|string',
             'citation' => 'required|string',
             'keywords' => 'required|array',
             'keywords.*' => 'string',
             'authors' => 'required|array',
             'authors.*' => 'string',
-            'file' => 'required|string',
+            'file' => 'required|mimes:pdf|max:15360',
             'cover' => 'required|string',
             'references' => 'nullable|string',
             'affiliations' => 'nullable|string',
@@ -62,7 +43,6 @@ class StoreArticleRequest extends FormRequest
             'license' => 'nullable|string',
             'doi' => 'nullable|string',
             'status' => 'nullable|string',
-            'user_id' => 'required|exists:users,id',
             'issue_id' => 'required|exists:issues,id',
         ];
     }

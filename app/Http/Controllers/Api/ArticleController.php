@@ -3,24 +3,22 @@
 namespace App\Http\Controllers\Api;
 
 use App\Models\Article;
-use App\Http\Requests\StoreArticleRequest;
-use App\Http\Requests\UpdateArticleRequest;
 use Illuminate\Support\Facades\Auth;
+use Orion\Concerns\DisableAuthorization;
 use Orion\Http\Controllers\Controller;
 
 class ArticleController extends Controller
 {
 
-    public function __construct()
+    use DisableAuthorization;
+
+    protected function applyMiddleware()
     {
-        $this->middleware(['auth:api', 'admin'])->only(['store', 'update', 'destroy', 'restore', 'batchStore', 'batchUpdate', 'batchDestroy', 'batchRestore']);
+        $this->middleware('auth:api')->only(['store', 'update', 'destroy', 'restore', 'batchStore', 'batchUpdate', 'batchDestroy', 'batchRestore']);
+        $this->middleware('admin')->only(['store', 'update', 'destroy', 'restore', 'batchStore', 'batchUpdate', 'batchDestroy', 'batchRestore']);
     }
 
     protected $model = Article::class;
-
-    protected $request = StoreArticleRequest::class;
-
-    protected $updateRequest = UpdateArticleRequest::class;
 
     protected $attributes = [
         'id',
@@ -104,11 +102,11 @@ class ArticleController extends Controller
 
     protected $softDeletes = true;
 
-    // protected $scopes = [];
+    protected $scopes = [];
 
-    // protected $allowedFilters = [];
+    protected $allowedFilters = [];
 
-    // protected $allowedIncludes = [];
+    protected $allowedIncludes = [];
 
     protected $searchable = [
         'id',
@@ -135,15 +133,15 @@ class ArticleController extends Controller
         'updated_at'
     ];
 
-    // protected $with = [];
+    protected $with = [];
 
-    // protected $withCount = [];
+    protected $withCount = [];
 
     protected $perPage = 20;
 
     protected $maxPerPage = 1000;
 
-    protected $resource = 'App\Http\Resources\ArticleResource';
+    protected $resource = \App\Http\Resources\ArticleResource::class;
 
     protected function beforeStore($request, $model)
     {
