@@ -42,7 +42,6 @@ class ArticleController extends Controller
         'user_id',
         'issue_id',
         'created_at',
-        'updated_at'
     ];
 
     protected $filterable = [
@@ -64,10 +63,8 @@ class ArticleController extends Controller
         'doi',
         'published_at',
         'status',
-        'user_id',
         'issue_id',
         'created_at',
-        'updated_at'
     ];
 
     protected $sortable = [
@@ -89,10 +86,8 @@ class ArticleController extends Controller
         'doi',
         'published_at',
         'status',
-        'user_id',
         'issue_id',
         'created_at',
-        'updated_at'
     ];
 
     protected $relations = [
@@ -127,10 +122,8 @@ class ArticleController extends Controller
         'doi',
         'published_at',
         'status',
-        'user_id',
         'issue_id',
         'created_at',
-        'updated_at'
     ];
 
     protected $with = [];
@@ -145,6 +138,14 @@ class ArticleController extends Controller
 
     protected function beforeStore($request, $model)
     {
+        if($request->has('file')){
+            $file = $request->file('file');
+            $fileExtension = $file->getClientOriginalExtension();
+            $originalFileName = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
+            $fileName = $originalFileName . '-' . uniqid() . '.' . $fileExtension;
+            $filePath = $file->storeAs('articles', $fileName, 'public');
+            $model->file = $filePath;
+        }
         $model->user_id = Auth::user()->id;
     }
 }

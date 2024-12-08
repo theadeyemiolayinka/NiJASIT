@@ -12,8 +12,51 @@ class ArticleRequest extends Request
      */
     public function authorize(): bool
     {
+        if (!$this->route()) {
+            return true;
+        }
+
+        if ($this->route()->getActionMethod() === 'store') {
+            return Auth::check() && Auth::user()->is_admin;
+        }
+
+        if ($this->route()->getActionMethod() === 'batchStore') {
+            return Auth::check() && Auth::user()->is_admin;
+        }
+
+        if ($this->route()->getActionMethod() === 'update') {
+            return Auth::check() && Auth::user()->is_admin;
+        }
+
+        if ($this->route()->getActionMethod() === 'batchUpdate') {
+            return Auth::check() && Auth::user()->is_admin;
+        }
+
+        if ($this->route()->getActionMethod() === 'associate') {
+            return Auth::check() && Auth::user()->is_admin;
+        }
+
+        if ($this->route()->getActionMethod() === 'attach') {
+            return Auth::check() && Auth::user()->is_admin;
+        }
+
+        if ($this->route()->getActionMethod() === 'detach') {
+            return Auth::check() && Auth::user()->is_admin;
+        }
+
+        if ($this->route()->getActionMethod() === 'sync') {
+            return Auth::check() && Auth::user()->is_admin;
+        }
+
+        if ($this->route()->getActionMethod() === 'toggle') {
+            return Auth::check() && Auth::user()->is_admin;
+        }
+
+        if ($this->route()->getActionMethod() === 'updatePivot') {
+            return Auth::check() && Auth::user()->is_admin;
+        }
+
         return true;
-        // return Auth::check() && Auth::user()->is_admin;
     }
 
     /**
@@ -43,7 +86,7 @@ class ArticleRequest extends Request
             'license' => 'nullable|string',
             'doi' => 'nullable|string',
             'status' => 'nullable|string',
-            'issue_id' => 'required|exists:issues,id',
+            'issue_id' => 'nullable|exists:issues,id',
         ];
     }
 }

@@ -31,38 +31,23 @@ class IssueController extends Controller
         'doi',
         'user_id',
         'created_at',
-        'updated_at'
     ];
 
-    protected $filterable = [
-        'id',
-        'title',
-        'description',
-        'volume',
-        'number',
-        'year',
-        'month',
-        'cover',
-        'doi',
-        'user_id',
-        'created_at',
-        'updated_at'
-    ];
-
-    protected $sortable = [
-        'id',
-        'title',
-        'description',
-        'volume',
-        'number',
-        'year',
-        'month',
-        'cover',
-        'doi',
-        'user_id',
-        'created_at',
-        'updated_at'
-    ];
+    public function sortableBy(): array
+    {
+        return [
+            'id',
+            'title',
+            'description',
+            'volume',
+            'number',
+            'year',
+            'month',
+            'cover',
+            'doi',
+            'created_at',
+        ];
+    }
 
     protected $relations = [
         'user',
@@ -73,24 +58,48 @@ class IssueController extends Controller
 
     protected $scopes = [];
 
-    protected $allowedFilters = [];
+    public function filterableBy(): array
+    {
+        return [
+            'id',
+            'title',
+            'description',
+            'volume',
+            'number',
+            'year',
+            'month',
+            'cover',
+            'doi',
+            'created_at',
+            'articles',
+            'articles.created_at'
+        ];
+    }
 
-    protected $allowedIncludes = [];
+    public function includes(): array
+    {
+        return [
+            'articles',
+            'articles.title'
+        ];
+    }
 
-    protected $searchable = [
-        'id',
-        'title',
-        'description',
-        'volume',
-        'number',
-        'year',
-        'month',
-        'cover',
-        'doi',
-        'user_id',
-        'created_at',
-        'updated_at'
-    ];
+    public function searchableBy(): array
+    {
+        return [
+            'id',
+            'title',
+            'description',
+            'volume',
+            'number',
+            'year',
+            'month',
+            'cover',
+            'doi',
+            'created_at',
+            'articles.title'
+        ];
+    }
 
     protected $with = [];
 

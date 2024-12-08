@@ -16,10 +16,10 @@ return new class extends Migration
             $table->string('title');
             $table->string('description');
 
-            $table->string('volume');
-            $table->string('number');
-            $table->string('year');
-            $table->string('month');
+            $table->integer('volume');
+            $table->integer('number');
+            $table->year('year');
+            $table->integer('month');
             $table->string('cover');
 
             $table->string('doi')->nullable();
