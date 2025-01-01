@@ -96,7 +96,8 @@ Route::group(['middleware' => ['api', 'throttle:5,1']], function () {
 });
 
 Route::middleware(['api', 'auth:api'])->post('/user', function (Request $request) {
-    return $request->user();
+    $user = $request->user();
+    return response()->json($user->makeHidden(['id', 'is_admin', 'email_verified_at', 'two_factor_confirmed_at', 'current_team_id']));
 });
 
 Route::group(['as' => 'api.'], function () {
