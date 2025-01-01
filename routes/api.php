@@ -95,7 +95,7 @@ Route::group(['middleware' => ['api', 'throttle:5,1']], function () {
     });
 });
 
-Route::middleware(['api', 'auth:api'])->get('/user', function (Request $request) {
+Route::middleware(['api', 'auth:api'])->post('/user', function (Request $request) {
     return $request->user();
 });
 
