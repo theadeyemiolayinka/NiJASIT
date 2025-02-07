@@ -9,6 +9,7 @@ use App\Http\Controllers\Auth\NewPasswordController;
 use App\Http\Controllers\Auth\PasswordResetLinkController;
 use App\Http\Controllers\Auth\RegistrationController;
 use App\Http\Controllers\Auth\VerifyEmailController;
+use App\Http\Resources\UserResource;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Artisan;
@@ -59,7 +60,7 @@ Route::group(['middleware' => ['api', 'throttle:5,1']], function () {
         ]);
         return response()->json([
             'success' => true,
-            'user' => $user->details()
+            'user' => new UserResource($user)
         ]);
     });
 
@@ -76,7 +77,7 @@ Route::group(['middleware' => ['api', 'throttle:5,1']], function () {
         ]);
         return response()->json([
             'success' => true,
-            'user' => $user->details()
+            'user' => new UserResource($user)
         ]);
     });
 

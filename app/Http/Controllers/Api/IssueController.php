@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Models\Issue;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 use Orion\Concerns\DisableAuthorization;
 use Orion\Http\Controllers\Controller;
 
@@ -114,5 +115,28 @@ class IssueController extends Controller
     protected function beforeStore($request, $model)
     {
         $model->user_id = Auth::user()->id;
+    }
+
+    protected function afterStore($request, $model)
+    {
+        if ($request->has('articles')) {
+            foreach ($request->articles as $articleData) {
+                try {
+                    if (isset($articleData['file'])) {
+                        $file = $articleData['file'];
+                        $fileExtension = $file->getClientOriginalExtension();
+                        $originalFileName = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
+                        $fileName = $originalFileName . '-' . uniqid() . '.' . $fileExtension;
+                        $filePath = $file->storeAs('articles', $fileName, 'public');
+                        $articleData['file'] = $filePath;
+                    }
+                    $articleData['user_id'] = Auth::user()->id;
+                    //
+                    $model->articles()->create($articleData);
+                } catch (\Exception $e) {
+                    Log::error('Error creating article: ' . $e->getMessage());
+                }
+            }
+        }
     }
 }

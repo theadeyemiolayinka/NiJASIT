@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\LoginRequest;
+use App\Http\Resources\UserResource;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -26,7 +27,7 @@ class SessionController extends Controller
             $data = [
                 'success' => true,
                 'message' => 'User logged in Successfully',
-                'user' => $user->details(),
+                'user' => new UserResource($user),
                 'access_token' => $token,
             ];
             return response()->json($data, 200);

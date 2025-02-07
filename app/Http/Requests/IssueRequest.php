@@ -76,6 +76,28 @@ class IssueRequest extends Request
             'month' => 'required|integer|min:01|max:12',
             'cover' => 'required|string',
             'doi' => 'nullable|string',
+
+            // feat: side create articles with issue
+            'articles' => 'nullable|array',
+            'articles.*.title' => 'required|string',
+            'articles.*.abstract' => 'required|string',
+            'articles.*.citation' => 'required|string',
+            'articles.*.keywords' => 'required|array',
+            'articles.*.keywords.*' => 'string',
+            'articles.*.authors' => 'required|array',
+            'articles.*.authors.*' => 'string',
+            'articles.*.file' => 'required|mimes:pdf|max:15360',
+            'articles.*.cover' => 'required|string',
+            'articles.*.references' => 'nullable|string',
+            'articles.*.affiliations' => 'nullable|string',
+            'articles.*.funding' => 'nullable|string',
+            'articles.*.acknowledgements' => 'nullable|string',
+            'articles.*.conflicts' => 'nullable|string',
+            'articles.*.data_availability' => 'nullable|string',
+            'articles.*.license' => 'nullable|string',
+            'articles.*.doi' => 'nullable|string',
+            'articles.*.status' => 'nullable|string',
+            'articles.*.issue_id' => 'nullable|exists:issues,id'
         ];
     }
 }
