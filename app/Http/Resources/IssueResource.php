@@ -30,7 +30,8 @@ class IssueResource extends JsonResource
             'updated_at' => $this->updated_at,
             'deleted_at' => $this->deleted_at,
             'user' => new UserResource($this->whenLoaded('user')),
-            'articles' => ArticleResource::collection($this->whenLoaded('articles')),
+            // 'articles' => ArticleResource::collection($this->whenLoaded('articles')),
+            'articles' => $this->articles->count() > 0 ? ArticleResource::collection($this->articles) : [],
         ];
     }
 }
