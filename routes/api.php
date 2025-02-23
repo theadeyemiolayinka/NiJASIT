@@ -20,11 +20,11 @@ use Orion\Facades\Orion;
 Route::group(['middleware' => ['api', 'throttle:5,1']], function () {
 
     Route::post('/register', [RegistrationController::class, 'store'])
-        ->middleware('guest:sanctum')
+        ->middleware('guest')
         ->name('register');
 
     Route::post('/login', [SessionController::class, 'store'])
-        ->middleware('guest:sanctum')
+        ->middleware('guest')
         ->name('login');
 
     // Route::post('/forgot-password', [PasswordResetLinkController::class, 'store'])
