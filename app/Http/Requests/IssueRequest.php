@@ -65,7 +65,7 @@ class IssueRequest extends Request
      * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
      */
 
-    public function commonRules(): array
+    public function storeRules(): array
     {
         return [
             'title' => 'required|string',
@@ -88,6 +88,42 @@ class IssueRequest extends Request
             'articles.*.authors.*' => 'string',
             'articles.*.file' => 'required|mimes:pdf|max:15360',
             'articles.*.cover' => 'required|string',
+            'articles.*.references' => 'nullable|string',
+            'articles.*.affiliations' => 'nullable|string',
+            'articles.*.funding' => 'nullable|string',
+            'articles.*.acknowledgements' => 'nullable|string',
+            'articles.*.conflicts' => 'nullable|string',
+            'articles.*.data_availability' => 'nullable|string',
+            'articles.*.license' => 'nullable|string',
+            'articles.*.doi' => 'nullable|string',
+            'articles.*.status' => 'nullable|string',
+            'articles.*.issue_id' => 'nullable|exists:issues,id'
+        ];
+    }
+
+    public function updateRules(): array
+    {
+        return [
+            'title' => 'sometimes|required|string',
+            'description' => 'sometimes|required|string',
+            'volume' => 'sometimes|required|numeric',
+            'number' => 'sometimes|required|numeric',
+            'year' => 'sometimes|required|integer|min:1900|max:' . date('Y'),
+            'month' => 'sometimes|required|integer|min:01|max:12',
+            'cover' => 'sometimes|required|string',
+            'doi' => 'nullable|string',
+
+            // feat: side create articles with issue
+            'articles' => 'nullable|array',
+            'articles.*.title' => 'sometimes|required|string',
+            'articles.*.abstract' => 'sometimes|required|string',
+            'articles.*.citation' => 'sometimes|required|string',
+            'articles.*.keywords' => 'sometimes|required|array',
+            'articles.*.keywords.*' => 'string',
+            'articles.*.authors' => 'sometimes|required|array',
+            'articles.*.authors.*' => 'string',
+            'articles.*.file' => 'sometimes|required|mimes:pdf|max:15360',
+            'articles.*.cover' => 'sometimes|required|string',
             'articles.*.references' => 'nullable|string',
             'articles.*.affiliations' => 'nullable|string',
             'articles.*.funding' => 'nullable|string',

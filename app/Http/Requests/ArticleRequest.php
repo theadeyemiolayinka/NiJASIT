@@ -64,9 +64,8 @@ class ArticleRequest extends Request
      *
      * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
      */
-    public function commonRules(): array
+    public function storeRules(): array
     {
-
         return [
             'title' => 'required|string',
             'abstract' => 'required|string',
@@ -77,6 +76,31 @@ class ArticleRequest extends Request
             'authors.*' => 'string',
             'file' => 'required|mimes:pdf|max:15360',
             'cover' => 'required|string',
+            'references' => 'nullable|string',
+            'affiliations' => 'nullable|string',
+            'funding' => 'nullable|string',
+            'acknowledgements' => 'nullable|string',
+            'conflicts' => 'nullable|string',
+            'data_availability' => 'nullable|string',
+            'license' => 'nullable|string',
+            'doi' => 'nullable|string',
+            'status' => 'nullable|string',
+            'issue_id' => 'nullable|exists:issues,id',
+        ];
+    }
+
+    public function updateRules(): array
+    {
+        return [
+            'title' => 'sometimes|required|string',
+            'abstract' => 'sometimes|required|string',
+            'citation' => 'sometimes|required|string',
+            'keywords' => 'sometimes|required|array',
+            'keywords.*' => 'sometimes|required|string',
+            'authors' => 'sometimes|required|array',
+            'authors.*' => 'sometimes|required|string',
+            'file' => 'sometimes|required|mimes:pdf|max:15360',
+            'cover' => 'sometimes|required|string',
             'references' => 'nullable|string',
             'affiliations' => 'nullable|string',
             'funding' => 'nullable|string',

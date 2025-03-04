@@ -135,10 +135,9 @@ class ArticleController extends Controller
     protected $maxPerPage = 1000;
 
     protected $resource = \App\Http\Resources\ArticleResource::class;
-
     protected function beforeStore($request, $model)
     {
-        if($request->has('file')){
+        if ($request->has('file')) {
             $file = $request->file('file');
             $fileExtension = $file->getClientOriginalExtension();
             $originalFileName = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
@@ -147,5 +146,27 @@ class ArticleController extends Controller
             $model->file = $filePath;
         }
         $model->user_id = Auth::user()->id;
+    }
+
+    protected function beforeUpdate($request, $model)
+    {
+        if ($request->has('file')) {
+            $file = $request->file('file');
+            $fileExtension = $file->getClientOriginalExtension();
+            $originalFileName = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
+            $fileName = $originalFileName . '-' . uniqid() . '.' . $fileExtension;
+            $filePath = $file->storeAs('articles', $fileName, 'public');
+            if ($filePath) {
+                // Delete the previous file if it exists
+                try {
+                    if ($model->file && \Storage::disk('public')->exists($model->file)) {
+                        \Storage::disk('public')->delete($model->file);
+                    }
+                } catch (\Throwable $th) {
+                    //
+                }
+                $model->file = $filePath;
+            }
+        }
     }
 }
