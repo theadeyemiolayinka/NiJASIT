@@ -44,51 +44,57 @@ class ArticleController extends Controller
         'created_at',
     ];
 
-    protected $filterable = [
-        'id',
-        'title',
-        'abstract',
-        'citation',
-        'keywords',
-        'authors',
-        'file',
-        'cover',
-        'references',
-        'affiliations',
-        'funding',
-        'acknowledgements',
-        'conflicts',
-        'data_availability',
-        'license',
-        'doi',
-        'published_at',
-        'status',
-        'issue_id',
-        'created_at',
-    ];
+    public function filterableBy(): array
+    {
+        return [
+            'id',
+            'title',
+            'abstract',
+            'citation',
+            'keywords',
+            'authors',
+            'file',
+            'cover',
+            'references',
+            'affiliations',
+            'funding',
+            'acknowledgements',
+            'conflicts',
+            'data_availability',
+            'license',
+            'doi',
+            'published_at',
+            'status',
+            'issue_id',
+            'created_at',
+        ];
+    }
 
-    protected $sortable = [
-        'id',
-        'title',
-        'abstract',
-        'citation',
-        'keywords',
-        'authors',
-        'file',
-        'cover',
-        'references',
-        'affiliations',
-        'funding',
-        'acknowledgements',
-        'conflicts',
-        'data_availability',
-        'license',
-        'doi',
-        'published_at',
-        'status',
-        'issue_id',
-        'created_at',
-    ];
+    public function sortableBy(): array
+    {
+        return [
+            'id',
+            'title',
+            'abstract',
+            'citation',
+            'keywords',
+            'authors',
+            'file',
+            'cover',
+            'references',
+            'affiliations',
+            'funding',
+            'acknowledgements',
+            'conflicts',
+            'data_availability',
+            'license',
+            'doi',
+            'published_at',
+            'status',
+            'issue_id',
+            'created_at',
+        ];
+    }
 
     protected $relations = [
         'user',
@@ -103,28 +109,24 @@ class ArticleController extends Controller
 
     protected $allowedIncludes = [];
 
-    protected $searchable = [
-        'id',
-        'title',
-        'abstract',
-        'citation',
-        'keywords',
-        'authors',
-        'file',
-        'cover',
-        'references',
-        'affiliations',
-        'funding',
-        'acknowledgements',
-        'conflicts',
-        'data_availability',
-        'license',
-        'doi',
-        'published_at',
-        'status',
-        'issue_id',
-        'created_at',
-    ];
+    public function searchableBy(): array
+    {
+        return [
+            'id',
+            'title',
+            'abstract',
+            'citation',
+            'keywords',
+            'authors',
+            'references',
+            'affiliations',
+            'funding',
+            'acknowledgements',
+            'conflicts',
+            'data_availability',
+            'doi',
+        ];
+    }
 
     protected $with = [];
 
