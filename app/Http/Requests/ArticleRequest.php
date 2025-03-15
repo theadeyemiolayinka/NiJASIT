@@ -74,8 +74,8 @@ class ArticleRequest extends Request
             'keywords.*' => 'string',
             'authors' => 'sometimes|array',
             'authors.*' => 'sometimes|array',
-            'authors.*.name' => 'sometimes|string',
-            'authors.*.department' => 'sometimes|string',
+            'authors.*.name' => 'sometimes|required_with:authors.*.department|string',
+            'authors.*.department' => 'sometimes|required_with:authors.*.name|string',
             'file' => 'required|mimes:pdf|max:15360',
             'cover' => 'required|string',
             'references' => 'nullable|string',
@@ -86,6 +86,7 @@ class ArticleRequest extends Request
             'data_availability' => 'nullable|string',
             'license' => 'nullable|string',
             'doi' => 'nullable|string',
+            'pages' => ['required', 'regex:/^\d+-\d+$/'],
             'status' => 'nullable|string',
             'issue_id' => 'nullable|exists:issues,id',
         ];
@@ -101,8 +102,8 @@ class ArticleRequest extends Request
             'keywords.*' => 'sometimes|string',
             'authors' => 'sometimes|array',
             'authors.*' => 'sometimes|array',
-            'authors.*.name' => 'required_with:authors.*.department|string',
-            'authors.*.department' => 'required_with:authors.*.name|string',
+            'authors.*.name' => 'sometimes|required_with:authors.*.department|string',
+            'authors.*.department' => 'sometimes|required_with:authors.*.name|string',
             'file' => 'sometimes|mimes:pdf|max:15360',
             'cover' => 'sometimes|string',
             'references' => 'nullable|string',
@@ -113,8 +114,26 @@ class ArticleRequest extends Request
             'data_availability' => 'nullable|string',
             'license' => 'nullable|string',
             'doi' => 'nullable|string',
+            'pages' => ['sometimes', 'regex:/^\d+-\d+$/'],
             'status' => 'nullable|string',
             'issue_id' => 'nullable|exists:issues,id',
+        ];
+    }
+
+    public function batchStoreRules(): array
+    {
+        return [
+
+            'resources.*.authors.*.name' => 'required_with:resources.*.authors.*.department|string',
+            'resources.*.authors.*.department' => 'required_with:resources.*.authors.*.name|string',
+        ];
+    }
+
+    public function batchUpdateRules(): array
+    {
+        return [
+            'resources.*.authors.*.name' => 'required_with:resources.*.authors.*.department|string',
+            'resources.*.authors.*.department' => 'required_with:resources.*.authors.*.name|string',
         ];
     }
 }

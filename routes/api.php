@@ -105,4 +105,5 @@ Route::group(['as' => 'api.'], function () {
     Orion::resource('issues', IssueController::class)->withSoftDeletes();
     Orion::resource('articles', ArticleController::class)->withSoftDeletes();
     Orion::hasManyResource('issue', 'articles', IssueArticlesController::class)->withSoftDeletes();
+    Route::get('/articles/{id}/download', [ArticleController::class, 'download']);
 });

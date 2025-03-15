@@ -25,6 +25,7 @@ class Article extends Model
         'data_availability',
         'license',
         'doi',
+        'pages',
         'published_at',
         'status',
         'user_id',

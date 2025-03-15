@@ -31,6 +31,7 @@ class ArticleResource extends JsonResource
             'data_availability' => $this->data_availability,
             'license' => $this->license,
             'doi' => $this->doi,
+            'pages' => $this->pages,
             'published_at' => $this->published_at,
             'status' => $this->status,
             // 'user_id' => $this->user_id,

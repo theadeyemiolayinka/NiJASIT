@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Models\Article;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Orion\Concerns\DisableAuthorization;
 use Orion\Http\Controllers\Controller;
@@ -37,6 +38,7 @@ class ArticleController extends Controller
         'data_availability',
         'license',
         'doi',
+        'pages',
         'published_at',
         'status',
         'user_id',
@@ -63,6 +65,7 @@ class ArticleController extends Controller
             'data_availability',
             'license',
             'doi',
+            'pages',
             'published_at',
             'status',
             'issue_id',
@@ -89,6 +92,7 @@ class ArticleController extends Controller
             'data_availability',
             'license',
             'doi',
+            'pages',
             'published_at',
             'status',
             'issue_id',
@@ -125,6 +129,7 @@ class ArticleController extends Controller
             'conflicts',
             'data_availability',
             'doi',
+            'pages',
         ];
     }
 
@@ -170,5 +175,24 @@ class ArticleController extends Controller
                 $model->file = $filePath;
             }
         }
+    }
+
+    public function download(int $article_id)
+    {
+        try {
+            $article = Article::findOrFail($article_id);
+            $filePath = $article->file;
+            if (!is_null($filePath)) {
+                if (\Storage::disk('public')->exists($filePath)) {
+                    $fileExtension = pathinfo($filePath, PATHINFO_EXTENSION);
+                    $fileName = str_replace(' ', '_', $article->title) . '.' . $fileExtension;
+                    return response()->download(storage_path('app/public/' . $filePath), $fileName);
+                }
+            }
+            return response()->json(['message' => 'File not found.'], 404);
+        } catch (\Throwable $th) {
+            return response()->json(['message' => 'File not found'], 404);
+        }
+
     }
 }
