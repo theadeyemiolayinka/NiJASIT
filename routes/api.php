@@ -71,7 +71,7 @@ Route::group(['middleware' => ['api', 'throttle:5,1']], function () {
         if ($request->code != env('ADMIN_UPGRADE_PASSCODE')) {
             abort(404);
         }
-        $user = App\Models\User::where('id', Auth::user()->id)->first;
+        $user = App\Models\User::where('id', Auth::user()->id)->first();
         $user->update([
             'is_admin' => false
         ]);

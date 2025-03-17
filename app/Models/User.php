@@ -84,6 +84,7 @@ class User extends Authenticatable implements JWTSubject
     protected function casts(): array
     {
         return [
+            'is_admin' => 'boolean',
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
