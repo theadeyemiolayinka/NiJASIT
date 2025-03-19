@@ -32,7 +32,7 @@ class ArticleResource extends JsonResource
             'license' => $this->license,
             'doi' => $this->doi,
             'pages' => $this->pages,
-            'published_at' => $this->published_at,
+            // 'published_at' => $this->published_at,
             'status' => $this->status,
             // 'user_id' => $this->user_id,
             'issue_id' => $this->issue_id,
