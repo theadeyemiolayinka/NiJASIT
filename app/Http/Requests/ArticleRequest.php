@@ -86,7 +86,7 @@ class ArticleRequest extends Request
             'data_availability' => 'nullable|string',
             'license' => 'nullable|string',
             'doi' => 'nullable|string',
-            'pages' => 'required|regex:/^\d+-\d+$/',
+            'pages' => 'required|regex:/^\d+[-‐‑‒–—―]\d+$/',
             'status' => 'nullable|string',
             'issue_id' => 'nullable|exists:issues,id',
         ];
@@ -114,7 +114,7 @@ class ArticleRequest extends Request
             'data_availability' => 'nullable|string',
             'license' => 'nullable|string',
             'doi' => 'nullable|string',
-            'pages' => 'sometimes|regex:/^\d+-\d+$/',
+            'pages' => 'sometimes|regex:/^\d+[-‐‑‒–—―]\d+$/',
             'status' => 'nullable|string',
             'issue_id' => 'nullable|exists:issues,id',
         ];

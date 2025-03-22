@@ -98,6 +98,7 @@ class IssueRequest extends Request
             'articles.*.data_availability' => 'nullable|string',
             'articles.*.license' => 'nullable|string',
             'articles.*.doi' => 'nullable|string',
+            'articles.*.pages' => 'required|regex:/^\d+[-‐‑‒–—―]\d+$/',
             'articles.*.status' => 'nullable|string',
             'articles.*.issue_id' => 'nullable|exists:issues,id'
         ];
