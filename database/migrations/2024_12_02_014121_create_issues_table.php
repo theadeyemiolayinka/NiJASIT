@@ -13,16 +13,16 @@ return new class extends Migration
     {
         Schema::create('issues', function (Blueprint $table) {
             $table->id();
-            $table->string('title');
-            $table->string('description');
+            $table->longText('title');
+            $table->longText('description');
 
             $table->integer('volume');
             $table->integer('number');
             $table->year('year');
             $table->integer('month');
-            $table->string('cover');
+            $table->longText('cover');
 
-            $table->string('doi')->nullable();
+            $table->longText('doi')->nullable();
 
             $table->foreignId('user_id')->constrained();
             $table->timestamps();
